@@ -89,9 +89,10 @@ Fonts that look better than the default and don't <a href="http://rdjpg.com/">en
 
 
 @import url(https://fonts.googleapis.com/css?family=Amatic+SC);
-body {
-  
+body { 
+  margin:10px;
 }
+
 header {
   background-color:lightblue; 
 }
