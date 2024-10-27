@@ -7,11 +7,6 @@
   box-sizing: border-box;  /* box-sizing wird auf border-box geändert, damit padding und border in die Gesamtgröße eines Elements mit eingerechnet werden */
 }
 
-
-body {
-  line-height: 1.5; /* Legt den Zeilenabstand für den gesamnten body fest */
-}
-
 img, video {
   max-width: 100%; /* Verhindert das Bilder usw. über übergeordnete Elemente hinaus gehen*/
   height: auto; /* So wird das Seitenverhältnis festgelegt */
@@ -31,7 +26,7 @@ Setzt die Standardstile von Links zurück und entfernt die Unterstreichung.
 
 
 html {
-  line-height: 1.15; /* 1 */
+  line-height: 1.5; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
 /**
  * 1. Correct the line height in all browsers.
