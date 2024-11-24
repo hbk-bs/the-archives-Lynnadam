@@ -1,0 +1,152 @@
+
+<header>
+  <section> 
+  <nav>
+  <ul>
+    <li><a href=>1</a> </li>
+    <li><a href=>2</a></li>
+    <li><a href=>3</a></li>
+  </ul>    
+  </nav>
+<h1>Lynn Mascha Adam </h1> 
+</section>  
+</header>
+
+<main>
+  <section class="Thema1">
+  <h2>thema1</h2>
+  <p>Some assets I use throughout the seminar <a href="http://rdjpg.com/">end of a sentence</a> colornames.inpyjamas.dev/
+Mozilla Developer Network (MDN) Best resource for CSS and HTML https://developer.mozilla.org/en-US/
+Fonts that look better than the default and don't phone ho</p>
+    
+    <ul> 
+      <details>
+        <summary>  
+        </summary>
+      <li>1</li> 
+         <li>2</li>
+      <li>3</li>
+      </details>
+    </ul>
+  </section>
+  
+  <section class="Thema2">
+  <h2>thema2</h2>
+  <p>Some assets I use throughout the seminar https://assets.qawsed.site/
+CSS color names search https://colornames.inpyjamas.dev/
+Mozilla Developer Network (MDN) Best resource for <a href="http://rdjpg.com/">end of a sentence</a> CSS and HTML https://developer.mozilla.org/en-US/
+Fonts that look better than the default and don't phone ho</p>
+    
+    
+    <ul> 
+      <details>
+        <summary>  
+        </summary>
+      <li>1</li> 
+         <li>2</li>
+      <li>3</li>
+      </details>
+    </ul>
+  </section>
+  
+  <section class="Thema3">
+  <h2>thema3</h2>
+  <p>Some assets I use throughout the seminar https://assets.qawsed.site/
+CSS color names search https://colornames.inpyjamas.dev/
+Mozilla Developer Network (MDN) Best resource for CSS and HTML https://developer.mozilla.org/en-US/
+Fonts that look better than the default and don't <a href="http://rdjpg.com/">end of a sentence</a>  phone ho</p>
+    
+ 
+    <ul> 
+      <details>
+        <summary>  
+        </summary>
+      <li>1</li> 
+         <li>2</li>
+      <li>3</li>
+      </details>
+    </ul>  
+  </section>
+  
+</main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@import url(https://fonts.googleapis.com/css?family=Amatic+SC);
+body { 
+  margin:10px;
+}
+
+header {
+  background-color:lightblue; 
+}
+
+a {
+  color:Black;
+  text-decoration: none;
+  background-color:white;
+  border-radius: 5px
+  
+}
+
+a:hover{
+  background-color:black;
+}
+
+header nav ul {
+  text-align:center;  
+  justify-content:space-evenly;
+  font-size: 160%
+} 
+
+header nav ul li {
+  list-style: none;
+  display:inline;
+}
+
+
+
+h1 { 
+  text-align:center;
+  color:black;
+  font-family:'Amatic SC';
+  font-size: 300%;
+  background-color: white
+}
+h2 {
+  background-color:lightblue;
+  text-align:center;
+  font-family: 'Amatic SC';
+}
+
+.Thema1 {
+  background-color:lightgrey;
+}
+
+.Thema2 {
+  background-color:lightgrey;
+}
+
+.Thema3 {
+  background-color:lightgrey;
+}
+
+ul {
+  font-weight: bold;
+}
