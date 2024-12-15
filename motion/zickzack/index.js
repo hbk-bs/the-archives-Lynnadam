@@ -1,13 +1,10 @@
-// script.js
 
 const canvas = document.getElementById("heartMonitorCanvas");
 const ctx = canvas.getContext("2d");
 
-// Set canvas size
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-// Parameters for the wave
 const baseHeight = 5; // Base height for small Zickzack
 const maxPeakHeight = 60; // Maximum height for peaks (spikes)
 const step = 10; // Horizontal step size
