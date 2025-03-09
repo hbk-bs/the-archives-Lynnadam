@@ -101,22 +101,30 @@ p {
 figure {
   text-align: center;
   margin: 15px;
-  max-width: 200px;
+  max-width: 250px; /* Vergrößert den Platz für jedes Element */
 }
 
-img {
-  max-width: 150px;
-  height: auto;
-  border-radius: 15px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+iframe {
+  width: 100%; /* Setzt die Breite des iframes auf die volle Breite des Elternelements */
+  height: 200px; /* Definiert eine Höhe für das iframe */
   border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-img:hover {
-  transform: scale(1.1); 
+figcaption {
+  margin-top: 10px;
+  font-size: 1rem;
+  color: #555;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
+/* Optional: Animationseffekt auf hover für die iframes */
+iframe:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
 
 a {
   color: #2575fc;
@@ -127,42 +135,4 @@ a {
   border-radius: 5px;
   background-color: transparent;
   transition: all 0.3s ease;
-}
-
-
-a:hover {
-  background-color: transparent;
-  color: #2575fc;
-  border: none;
-}
-
-figure a {
-  display: block;
-}
-
-figcaption {
-  margin-top: 10px;
-  font-size: 0.9rem;
-  color: #555;
-}
-
-h3 a {
-  display: inline-block;
-  margin-top: 20px;
-  font-size: 1rem;
-  color: #2575fc;
-  text-decoration: none;
-  padding: 10px 20px;
-  border: 1px solid #2575fc;
-  border-radius: 5px;
-  transition: all 0.3s ease;
-}
-
-h3 a:hover {
-  background-color: #2575fc;
-  color: white;
-}
-
-h3 a::before {
-  content: none;
 }
