@@ -11,12 +11,9 @@ body {
 
 .catch-me {
   position: absolute;
-  padding: 15px 30px;
+  width: 80px;    
+  height: 80px;   
   background: #1d3557;
-  color: #f1faee;
-  font-size: 18px;
-  font-weight: bold;
-  border: 2px solid #457b9d;
   border-radius: 10px;
   cursor: pointer;
   transition: transform 0.2s, background 0.2s;

@@ -19,7 +19,6 @@ document.addEventListener('mousemove', (event) => {
     let newLeft = catchMe.offsetLeft + moveX;
     let newTop = catchMe.offsetTop + moveY;
 
-
     newLeft = Math.max(0, Math.min(window.innerWidth - catchMe.offsetWidth, newLeft));
     newTop = Math.max(0, Math.min(window.innerHeight - catchMe.offsetHeight, newTop));
 
@@ -27,7 +26,6 @@ document.addEventListener('mousemove', (event) => {
     catchMe.style.top = `${newTop}px`;
   }
 });
-
 
 catchMe.style.left = '50%';
 catchMe.style.top = '50%';
