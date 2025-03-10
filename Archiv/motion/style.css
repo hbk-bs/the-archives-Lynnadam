@@ -101,12 +101,12 @@ p {
 figure {
   text-align: center;
   margin: 15px;
-  max-width: 250px; /* Vergrößert den Platz für jedes Element */
+  max-width: 250px; 
 }
 
 iframe {
-  width: 100%; /* Setzt die Breite des iframes auf die volle Breite des Elternelements */
-  height: 200px; /* Definiert eine Höhe für das iframe */
+  width: 100%; 
+  height: 200px; 
   border: none;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -120,7 +120,7 @@ figcaption {
   font-weight: bold;
 }
 
-/* Optional: Animationseffekt auf hover für die iframes */
+
 iframe:hover {
   transform: scale(1.05);
   transition: transform 0.3s ease;
@@ -135,4 +135,23 @@ a {
   border-radius: 5px;
   background-color: transparent;
   transition: all 0.3s ease;
+}
+
+figcaption a {
+  color: #2575fc;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  padding: 5px 15px;
+  border-radius: 5px;
+  background-color: transparent;
+  transition: transform 0.3s ease, color 0.3s ease;
+  margin-top: 10px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+figcaption a:hover {
+  transform: scale(1.2);
 }
