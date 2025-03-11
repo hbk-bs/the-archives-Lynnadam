@@ -114,11 +114,22 @@ img {
 }
 
 
-a:hover {
+.text-link:hover {
   transform: scale(1.2);
 }
 
 a {
+  color: #2575fc;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  padding: 5px 15px;
+  border-radius: 5px;
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.text-link {
   color: #2575fc;
   text-decoration: none;
   font-weight: bold;
@@ -128,8 +139,6 @@ a {
   background-color: transparent;
   transition: all 0.3s ease;
 }
-
-
 
 
 figure a {
