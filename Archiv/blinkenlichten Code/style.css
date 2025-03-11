@@ -2,20 +2,49 @@ body {
   margin: 0;
   font-family: 'Inter', sans-serif;
   background-color: #f9f9f9;
+  display: flex;
+  justify-content: center; /* Zentriert den Inhalt horizontal */
+  align-items: center; /* Zentriert den Inhalt vertikal */
+  height: 100vh; /* Verwendet die volle Höhe des Viewports */
+  padding: 0 20px; /* Gleichmäßiger Abstand zu den Bildschirmrändern */
+  box-sizing: border-box; /* Verhindert, dass das Padding die Gesamtgröße beeinflusst */
 }
 
-header {
-  text-align: center;
-  padding: 20px 20px 30px 20px;
-  background: linear-gradient(90deg, #6a11cb, #2575fc);
-  color: white;
+.content-block {
+  max-width: 800px; /* Maximale Breite des Blocks */
+  width: 100%; /* Block passt sich der Bildschirmgröße an */
+  background-color: white;
+  padding: 40px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: left;
   position: relative;
+  min-height: 300px; /* Stellt sicher, dass der Block nicht zu klein wird */
+  box-sizing: border-box; /* Padding wird bei der Berechnung der Größe berücksichtigt */
 }
 
-header h1 {
-  font-size: 2.5rem;
-  margin-top: 10px;
-  font-weight: 700;
+h1 {
+  font-size: 2.2rem;
+  color: #2575fc;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #2575fc;
+  padding-bottom: 10px;
+}
+
+p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+pre {
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 5px;
+  white-space: pre-wrap; /* Zeilenumbrüche anzeigen */
+  word-wrap: break-word; /* Lange Wörter umbrechen */
+  max-height: 500px; /* Maximalhöhe des Codeblocks */
+  overflow-y: auto; /* Ermöglicht Scrollen, wenn der Codeblock zu hoch ist */
 }
 
 header nav ul {
@@ -23,10 +52,8 @@ header nav ul {
   justify-content: flex-start;
   gap: 20px;
   list-style: none;
-  padding: 0;
-  position: absolute;
-  top: 10px;
-  left: 10px;
+  padding: 10px;
+  margin: 0;
 }
 
 header nav ul li a {
@@ -36,138 +63,39 @@ header nav ul li a {
   transition: all 0.3s ease;
 }
 
-header nav ul li a:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+header nav ul li a.back-link {
+  color: #2575fc;
+  text-decoration: none;
+  font-size: 1.2rem;
+  position: absolute;
+  top: 30px; /* Pfeil ist oben im Block */
+  left: 30px; /* Pfeil links oben */
+  display: inline-flex;
+  align-items: center;
 }
 
 header nav ul li a.back-link::before {
-  content: '\2190'; 
+  content: '\2190'; /* Unicode für linken Pfeil */
   font-size: 1.5rem;
-  color: white; 
-}
-
-main {
-  max-width: 900px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-  text-align: center;
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #2575fc;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #2575fc;
-  padding-bottom: 5px;
-}
-
-section {
-  margin-bottom: 40px;
-}
-
-p {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: #555;
-  margin: 10px 0;
-}
-
-.intro-block {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 40px;
-}
-
-.image-block {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.image-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  gap: 20px;
-}
-
-figure {
-  text-align: center;
-  margin: 15px;
-  max-width: 200px;
-}
-
-img {
-  max-width: 150px;
-  height: auto;
-  border-radius: 15px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-  border: none;
-}
-
-
-.text-link:hover {
-  transform: scale(1.2);
-}
-
-a {
-  color: #2575fc;
-  text-decoration: none;
-  font-weight: bold;
-  display: inline-block;
+  color: #2575fc; /* Pfeil immer blau */
   padding: 5px 15px;
+}
+
+header nav ul li a:hover {
+  background-color: rgba(123, 123, 123, 0.2);
   border-radius: 5px;
-  background-color: transparent;
-  transition: all 0.3s ease;
 }
 
-.text-link {
-  color: #2575fc;
-  text-decoration: none;
-  font-weight: bold;
-  display: inline-block;
-  padding: 0px 10px;
-  
-  background-color: transparent;
-  transition: all 0.3s ease;
-}
+@media (max-width: 600px) {
+  .content-block {
+    padding: 20px 15px;
+  }
 
+  h1 {
+    font-size: 1.8rem;
+  }
 
-figure a {
-  display: block;
-}
-
-figcaption {
-  margin-top: 10px;
-  font-size: 0.9rem;
-  color: #555;
-}
-
-h3 a {
-  display: inline-block;
-  margin-top: 20px;
-  font-size: 1rem;
-  color: #2575fc;
-  text-decoration: none;
-  padding: 10px 20px;
-  border: 1px solid #2575fc;
-  border-radius: 5px;
-  transition: all 0.3s ease;
-}
-
-h3 a:hover {
-  background-color: #2575fc;
-  color: white;
-}
-
-h3 a::before {
-  content: none;
+  p {
+    font-size: 1rem;
+  }
 }

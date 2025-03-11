@@ -7,84 +7,98 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
-  <header>
-    <section>
-      <nav>
-        <ul>
-          <li><a href="https://hbk-bs.github.io/the-archives-Lynnadam/Archiv/Archiv/" class="back-link"></a></li> 
-        </ul>
-      </nav>
-      <h1>blinkenlichten</h1>
-    </section>
-  </header>
+<header>
+  <nav>
+    <ul>
+      <li><a href="https://hbk-bs.github.io/the-archives-Lynnadam/Archiv/blinkenlichten/" class="back-link"></a></li>
+    </ul>
+  </nav>
+</header>
 
-  <main>
-    
-    <!-- TASK SECTION -->
-    <section class="intro-block">
-      <h2>Task</h2>
-      <p>
-        As part of our seminar on Physical Computing, we worked with
-        <a href="https://dein-link-zu-arduino.de" target="_blank" class="text-link">Arduino</a> microcontrollers to explore the intersection of hardware and software in creative ways. The assignment challenged us to repurpose an everyday object we already owned by enhancing it with sensors and LEDs. In collaboration with other groups, we aimed to place all our individual projects within a shared context. We collectively decided on the theme of “A Street,” where all objects would feature a consistent visual language—predominantly blue or grey materials combined with striking red lights.
-      </p>
-    </section>
+<div class="content-block">
+  <h1>Code</h1>
+  <pre>
+    <code>
+#include &lt;FastLED.h&gt;
 
-    <!-- IMPLEMENTATION SECTION -->
-    <section class="image-block">
-      <h2>Implementation</h2>
-      <p>
-        Our group chose to reimagine a classic construction site warning light—an object commonly found at home. The <a href="https://dein-link-zum-code.de" target="_blank" class="text-link">Code</a> development process went smoothly, but the analog assembly presented several challenges. In particular, soldering components onto the circuit board proved tricky, often leading to unexpected malfunctions. I ended up replacing and re-soldering resistors multiple times as issues kept arising. However, this hands-on process reignited a forgotten passion of mine for soldering and working with electronics. Through repeated refinement and simplification of our setup, we managed to develop a reliable and functional prototype.
-      </p>
-    
-      
-      <div class="image-container">
-        <figure>
-          <img src="https://hbk-bs.github.io/the-archives-Lynnadam/assets/images/b1.JPG" alt="Light">
-        </figure>
+#define LED_PIN 3
+#define NUM_LEDS 30
+#define BRIGHTNESS 255
+#define LED_TYPE WS2811
+#define COLOR_ORDER RGB
+CRGB leds[NUM_LEDS];
 
-        <figure>
-          <img src="https://hbk-bs.github.io/the-archives-Lynnadam/assets/images/b2.JPG" alt="Light">
-        </figure>
+// Pins definieren
+const int trigPin = 9;     // Trig-Pin des Ultraschallsensors
+const int echoPin = 10;    // Echo-Pin des Ultraschallsensors
 
-        <figure>
-          <img src="https://hbk-bs.github.io/the-archives-Lynnadam/assets/images/b3.JPG" alt="Light">
-        </figure>
+// Variablen für die Entfernungsmessung
+long duration;
+int distance;
 
-        <figure>
-          <img src="https://hbk-bs.github.io/the-archives-Lynnadam/assets/images/b4.JPG" alt="Light">
-        </figure>
+void setup() {
+  // Pins initialisieren
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
 
-        <figure>
-          <img src="https://hbk-bs.github.io/the-archives-Lynnadam/assets/images/b5.JPG" alt="Light">
-        </figure>
+  // Serielle Kommunikation starten (optional, für Debugging)
+  Serial.begin(9600);
 
+  FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
+  FastLED.setBrightness(BRIGHTNESS);
 
-        <figure>
-          <img src="https://hbk-bs.github.io/the-archives-Lynnadam/assets/images/b7.JPG" alt="Light">
-        </figure>
-      </div>
-    </section>
+  // LEDs ausschalten (initialisieren)
+  fill_solid(leds, NUM_LEDS, CRGB::Black);
+  FastLED.show();
+}
 
-    <!-- RESULT SECTION -->
-    <section class="image-block">
-      <h2>Result</h2>
-      <p>The final version of our modified construction lamp was both intuitive and effective. Thanks to an integrated distance sensor, the light could detect how close someone was standing. The nearer a person approached, the faster and more intensely the red warning light would flash—creating an immediate and impactful feedback system. Our repurposed object seamlessly fit into the overall aesthetic of the group project and added a dynamic, interactive element to our conceptual “Street.”</p>
+void loop() {
+  // Ultraschallimpuls senden
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
 
-      <div class="image-container">
-        <figure>
-          <img src="https://hbk-bs.github.io/the-archives-Lynnadam/assets/images/t.mp4"> 
-        </figure>
-          
-        <div class="image-container">
-          <figure>
-            <img src="https://hbk-bs.github.io/the-archives-Lynnadam/assets/images/el.mp4"> 
-          </figure>
-      </div>
-    </section>
+  // Echo-Zeit messen
+  duration = pulseIn(echoPin, HIGH);
 
-  </main>
+  // Entfernung in cm berechnen
+  distance = duration * 0.034 / 2;
 
-  <script src="index.js"></script>
+  // Debugging: Entfernung ausgeben (optional)
+  Serial.println("Entfernung: " + String(distance) + " cm");
+
+  if (distance > 200) {
+    // Alle LEDs blinken langsam in Rot
+    fill_solid(leds, NUM_LEDS, CRGB::Red);
+    FastLED.show();
+    delay(500); // Langsames Blinken
+    fill_solid(leds, NUM_LEDS, CRGB::Black);
+    FastLED.show();
+    delay(500);
+  } else if (distance <= 200 && distance > 100) {
+    // Alle LEDs blinken schneller in Rot
+    fill_solid(leds, NUM_LEDS, CRGB::Red);
+    FastLED.show();
+    delay(100); // Schnelleres Blinken
+    fill_solid(leds, NUM_LEDS, CRGB::Black);
+    FastLED.show();
+    delay(100);
+  } else {
+    // LEDs leuchten nacheinander schnell in Rot
+    for (int i = 0; i < NUM_LEDS; i++) {
+      leds[i] = CRGB::Red;  // LED auf Rot setzen
+      FastLED.show();
+      delay(50);            // Kurze Verzögerung pro LED
+      leds[i] = CRGB::Black; // LED ausschalten
+    }
+  }
+}
+    </code>
+  </pre>
+</div>
+
+<script src="index.js"></script>
 </body>
 </html>
