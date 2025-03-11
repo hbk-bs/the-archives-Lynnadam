@@ -113,28 +113,24 @@ img {
   border: none;
 }
 
-img:hover {
-  transform: scale(1.1); 
-}
 
+a:hover {
+  transform: scale(1.2);
+}
 
 a {
   color: #2575fc;
   text-decoration: none;
   font-weight: bold;
   display: inline-block;
-  padding: 5px 15px;
-  border-radius: 5px;
+  padding: 0px 10px;
+  
   background-color: transparent;
   transition: all 0.3s ease;
 }
 
 
-a:hover {
-  background-color: transparent;
-  color: #2575fc;
-  border: none;
-}
+
 
 figure a {
   display: block;
