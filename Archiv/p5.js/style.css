@@ -46,6 +46,8 @@ header nav ul li a.back-link::before {
   color: white; 
 }
 
+
+
 main {
   max-width: 900px;
   margin: 20px auto;
@@ -165,4 +167,18 @@ h3 a:hover {
 
 h3 a::before {
   content: none;
+}
+
+.text-link:hover {
+  transform: scale(1.2);
+}
+.text-link {
+  color: #2575fc;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  padding: 0px 10px;
+  
+  background-color: transparent;
+  transition: all 0.3s ease;
 }
