@@ -71,3 +71,35 @@ p {
 }
 
 
+.text-link:hover {
+  transform: scale(1.2);
+}
+.text-link {
+  color: #2575fc;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  padding: 0px 10px;
+  
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+
+@media (max-width: 768px) {
+  header nav ul {
+    flex-direction: column; 
+    align-items: center; 
+    gap: 15px; 
+  }
+
+  header nav ul li a {
+    font-size: 1.2rem; 
+    padding: 12px 20px; 
+  }
+
+  header h1 {
+    font-size: 2rem; 
+    margin-top: 30px;
+  }
+}
