@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>blinkenlichten - Lynn's Archiv</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<header>
+  <nav>
+    <ul>
+      <li><a href="https://hbk-bs.github.io/the-archives-Lynnadam/Archiv/blinkenlichten/" class="back-link"></a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="content-block">
+  <h1>Absolut</h1>
+  <pre>
+    <code>
+      function setup() {
+        createCanvas(700, 400);
+        background ("#868079")
+        
+       fill("#292929")
+        strokeWeight(0)
+        
+         triangle(80, 100, 170, 20, 260, 100);
+         quad(140, 100,200,100, 200, 300, 140, 300);
+      
+         fill("white")
+        strokeWeight(0)
+        
+         triangle(140,300, 320,300, 230, 380);
+         quad(200,100,260,100,260,300,200,300);
+      }
+      function keyPressed() {
+        if (key === 's') {
+          const name = prompt(
+            'Enter name',
+            `out-${Date.now()}.png`
+          );
+          save(name);
+        }
+      }
+      
+ 
+    </code>
+  </pre>
+</div>
+
+<div class="content-block">
+  <h1>Relativ</h1>
+  <pre>
+    <code>
+      const x = (n) => width * n;
+      const y = (n) => height * n;
+      const s = (n) => (height > width ? height * n : width * n);
+      
+      function setup() {
+        createCanvas(400, 400);
+        
+        
+        colorMode(HSL, 360, 100, 100, 100);
+        const myPrimaryColor = color(0, 0, 50);
+      
+        background(myPrimaryColor);
+      
+        const secondaryColor = color(0, 0, 0);;
+        
+        const tertiaryColor = color(0, 0, 100); 
+        
+       fill(secondaryColor);
+        strokeWeight(0)
+        
+        triangle(x(0.2), y(0.25), x(0.425), y(0.05), x(0.65), y(0.25));
+         
+        quad(x(0.35), y(0.25), x(0.5),y(0.25), x(0.5), y(0.75), x(0.35), y(0.75));
+      
+        fill(tertiaryColor);
+        strokeWeight(0)
+        
+         triangle(x(0.35),y(0.75),x(0.80),y(0.75), x(0.575), y(0.95));
+         quad(x(0.5),y(0.25),x(0.65),y(0.25),x(0.65),y(0.75),x(0.5),y(0.75));
+      }
+      
+      function keyPressed() {
+        if (key === 's') {
+          const name = prompt(
+            'Enter name',
+            `out-${Date.now()}.png`
+          );
+          save(name);
+        }
+      }
+      
+
+  </code>
+</pre>
+</div>
+</div>
+
+<script src="index.js"></script>
+</body>
+</html>
