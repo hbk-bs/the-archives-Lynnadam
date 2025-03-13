@@ -3,24 +3,24 @@ body {
   font-family: 'Inter', sans-serif;
   background-color: #f9f9f9;
   display: flex;
-  justify-content: center; /* Zentriert den Inhalt horizontal */
-  align-items: center; /* Zentriert den Inhalt vertikal */
-  height: 100vh; /* Verwendet die volle Höhe des Viewports */
-  padding: 0 20px; /* Gleichmäßiger Abstand zu den Bildschirmrändern */
-  box-sizing: border-box; /* Verhindert, dass das Padding die Gesamtgröße beeinflusst */
+  justify-content: center; 
+  align-items: center; 
+  height: 100vh; 
+  padding: 0 20px; 
+  box-sizing: border-box; 
 }
 
 .content-block {
-  max-width: 800px; /* Maximale Breite des Blocks */
-  width: 100%; /* Block passt sich der Bildschirmgröße an */
+  max-width: 800px; 
+  width: 100%; 
   background-color: white;
   padding: 40px 30px;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   text-align: left;
   position: relative;
-  min-height: 300px; /* Stellt sicher, dass der Block nicht zu klein wird */
-  box-sizing: border-box; /* Padding wird bei der Berechnung der Größe berücksichtigt */
+  min-height: 300px; 
+  box-sizing: border-box; 
 }
 
 h1 {
@@ -60,16 +60,16 @@ header nav ul li a.back-link {
   text-decoration: none;
   font-size: 1.2rem;
   position: absolute;
-  top: 30px; /* Pfeil ist oben im Block */
-  left: 30px; /* Pfeil links oben */
+  top: 30px; 
+  left: 30px; 
   display: inline-flex;
   align-items: center;
 }
 
 header nav ul li a.back-link::before {
-  content: '\2190'; /* Unicode für linken Pfeil */
+  content: '\2190'; 
   font-size: 1.5rem;
-  color: #2575fc; /* Pfeil immer blau */
+  color: #2575fc; 
   padding: 5px 15px;}
 
 header nav ul li a:hover {
