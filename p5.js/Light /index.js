@@ -1,3 +1,4 @@
+
 const x = (n) => width * n;
 const y = (n) => height * n;
 const s = (n) => (height > width ? height * n : width * n);
