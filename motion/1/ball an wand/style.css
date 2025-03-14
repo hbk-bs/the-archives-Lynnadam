@@ -1,0 +1,19 @@
+/* style.css */
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: #f0f0f0;
+    position: relative;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#ball {
+    width: 50px; /* Anfangsgröße des Balls */
+    height: 50px; /* Anfangsgröße des Balls */
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+}

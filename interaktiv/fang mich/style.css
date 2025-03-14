@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(180deg, #a8dadc, #457b9d);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+.catch-me {
+  position: absolute;
+  padding: 15px 30px;
+  background: #1d3557;
+  color: #f1faee;
+  font-size: 18px;
+  font-weight: bold;
+  border: 2px solid #457b9d;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.catch-me:hover {
+  background: #457b9d;
+  transform: scale(1.1);
+}
