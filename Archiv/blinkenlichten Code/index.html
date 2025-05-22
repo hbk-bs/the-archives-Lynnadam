@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>blinkenlichten - Lynn's Archiv</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<header>
+  <nav>
+    <ul>
+      <li><a href="https://hbk-bs.github.io/the-archives-Lynnadam/Archiv/blinkenlichten/" class="back-link"></a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="content-block">
+  <h1>Code</h1>
+  <pre>
+    <code>
+#include &lt;FastLED.h&gt;
+
+#define LED_PIN 3
+#define NUM_LEDS 30
+#define BRIGHTNESS 255
+#define LED_TYPE WS2811
+#define COLOR_ORDER RGB
+CRGB leds[NUM_LEDS];
+
+// Pins definieren
+const int trigPin = 9;     // Trig-Pin des Ultraschallsensors
+const int echoPin = 10;    // Echo-Pin des Ultraschallsensors
+
+// Variablen für die Entfernungsmessung
+long duration;
+int distance;
+
+void setup() {
+  // Pins initialisieren
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+
+  // Serielle Kommunikation starten (optional, für Debugging)
+  Serial.begin(9600);
+
+  FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
+  FastLED.setBrightness(BRIGHTNESS);
+
+  // LEDs ausschalten (initialisieren)
+  fill_solid(leds, NUM_LEDS, CRGB::Black);
+  FastLED.show();
+}
+
+void loop() {
+  // Ultraschallimpuls senden
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  // Echo-Zeit messen
+  duration = pulseIn(echoPin, HIGH);
+
+  // Entfernung in cm berechnen
+  distance = duration * 0.034 / 2;
+
+  // Debugging: Entfernung ausgeben (optional)
+  Serial.println("Entfernung: " + String(distance) + " cm");
+
+  if (distance > 200) {
+    // Alle LEDs blinken langsam in Rot
+    fill_solid(leds, NUM_LEDS, CRGB::Red);
+    FastLED.show();
+    delay(500); // Langsames Blinken
+    fill_solid(leds, NUM_LEDS, CRGB::Black);
+    FastLED.show();
+    delay(500);
+  } else if (distance <= 200 && distance > 100) {
+    // Alle LEDs blinken schneller in Rot
+    fill_solid(leds, NUM_LEDS, CRGB::Red);
+    FastLED.show();
+    delay(100); // Schnelleres Blinken
+    fill_solid(leds, NUM_LEDS, CRGB::Black);
+    FastLED.show();
+    delay(100);
+  } else {
+    // LEDs leuchten nacheinander schnell in Rot
+    for (int i = 0; i < NUM_LEDS; i++) {
+      leds[i] = CRGB::Red;  // LED auf Rot setzen
+      FastLED.show();
+      delay(50);            // Kurze Verzögerung pro LED
+      leds[i] = CRGB::Black; // LED ausschalten
+    }
+  }
+}
+    </code>
+  </pre>
+</div>
+
+<script src="index.js"></script>
+</body>
+</html>
