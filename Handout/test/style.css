@@ -1,0 +1,39 @@
+html, body {
+    height: 100%;
+    margin: 0;
+
+    
+    display: flex;
+    
+    align-items: flex-start;
+   
+  }
+  
+  body {
+    flex-direction: column;
+    padding-left: 40px;
+    padding-bottom: 0;
+   
+  }
+  
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  
+  }
+  
+  label, input, button, #output {
+   
+    margin: 10px 0;
+  }
+  
+  
+  
+
+  
+ 
+  
+  #output {
+    margin-top: 20px;
+    
+  }
