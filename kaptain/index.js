@@ -1,62 +1,181 @@
-// @ts-check
-const messageHistory = {
-  messages: [
-    {
-      role: 'system',
-      content:
-        'You are a might kitten that wants to control the world. Always stay in character!',
-    },
-  ],
-};
-
-const apiEndpoint = 'https://ff6347-openai-api.val.run/';
+const apiEndpoint = 'https://Lynnadam--0380223df34f429d8389e8e921a7eae9.web.val.run';
 
 document.addEventListener('DOMContentLoaded', () => {
-  const chatHistoryElement = document.querySelector('.chat-history');
-  const inputElement = document.querySelector('input');
-  const formElement = document.querySelector('form');
+  const input = document.getElementById('command');
+  const runBtn = document.getElementById('run');
+  const undoBtn = document.getElementById('undo');
+  const copyCodeBtn = document.getElementById('copy-code');
+  const output = document.getElementById('output');
+  const content = document.getElementById('content');
+  const codeDisplay = document.getElementById('code-display');
+  const codeArea = document.getElementById('code-area');
+  const dynamicStyles = document.getElementById('dynamic-styles');
 
-  if (!chatHistoryElement) throw new Error('Could not find .chat-history');
-  if (!inputElement) throw new Error('Input not found');
-  if (!formElement) throw new Error('Form not found');
+  const history = [];
+  const jsSnippets = []; 
 
-  formElement.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const formData = new FormData(formElement);
-    const content = formData.get('content');
-    if (!content) return;
+  saveHistory();
 
-    //@ts-ignore
-    messageHistory.messages.push({ role: 'user', content: content });
-    chatHistoryElement.innerHTML = addToChatHistoryElement(messageHistory);
-    inputElement.value = '';
+  function saveHistory() {
+    history.push(content.innerHTML);
+    if (history.length > 50) history.shift();
+  }
 
-    const response = await fetch(apiEndpoint, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
+  function undo() {
+    if (history.length > 1) {
+      history.pop();
+      jsSnippets.pop();
+
+     
+      content.innerHTML = history[history.length - 1];
+
+
+      if (jsSnippets.length > 0) {
+        try {
+          eval(jsSnippets[jsSnippets.length - 1]);
+        } catch (e) {
+          console.error('Fehler beim Ausführen von Undo-JS:', e);
+          output.style.color = 'red';
+          output.textContent = '❌ Fehler beim Ausführen von Undo-JS: ' + e.message;
+          setTimeout(() => (output.textContent = ''), 3000);
+          return;
+        }
+      }
+
+      output.style.color = 'green';
+      output.textContent = '';
+    } else {
+      output.style.color = 'orange';
+      output.textContent = '🔇 Keine weiteren Änderungen rückgängig.';
+    }
+    setTimeout(() => (output.textContent = ''), 2000);
+  }
+
+  async function onRun() {
+    const userInput = input.value.trim();
+    if (!userInput) return;
+
+    output.style.color = 'black';
+    output.textContent = 'Lade...';
+
+    const messages = [
+      {
+        role: 'system',
+        content: `
+Du bist ein JavaScript-Webentwickler. 
+Deine Aufgabe ist es, DOM-Elemente innerhalb von #content oder CSS über #dynamic-styles zu verändern. 
+- Bestehende Inhalte dürfen NICHT gelöscht werden, außer der Nutzer fordert das explizit an.
+- Verwende wenn möglich DOM-Methoden wie appendChild() oder insertAdjacentHTML().
+- Kein Zugriff auf outerHTML oder document.documentElement.
+Antwort ausschließlich mit JavaScript-Code.
+`.trim(),
       },
-      body: JSON.stringify(messageHistory),
-    });
+      {
+        role: 'user',
+        content: userInput,
+      },
+    ];
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(errorText);
+    try {
+      const response = await fetch(apiEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages }),
+      });
+
+      if (!response.ok) {
+        output.style.color = 'red';
+        output.textContent = '⚠️ API-Fehler: ' + (await response.text());
+        return;
+      }
+
+      const data = await response.json();
+      let code = data.completion.choices[0].message.content;
+
+      
+      code = code.replace(/```(javascript|js)?\n?/g, '').replace(/```/g, '').trim();
+
+      const forbidden = ['outerHTML', 'document.documentElement'];
+      if (forbidden.some(frag => code.includes(frag))) {
+        output.style.color = 'red';
+        output.textContent = '⛔ Zu gefährlicher Code – Änderung abgelehnt.';
+        return;
+      }
+
+      try {
+        saveHistory();
+
+    
+        jsSnippets.length = 0; 
+        jsSnippets.push(code);
+        eval(code);
+
+        output.textContent = '';
+      } catch (e) {
+        output.style.color = 'red';
+        output.textContent = '❌ Fehler beim Ausführen: ' + e.message;
+      }
+    } catch (err) {
+      output.style.color = 'red';
+      output.textContent = '🌐 Fehler bei Anfrage: ' + err.message;
     }
 
-    const json = await response.json();
-    //@ts-ignore
-    messageHistory.messages.push(json.completion.choices[0].message);
-    chatHistoryElement.innerHTML = addToChatHistoryElement(messageHistory);
-    chatHistoryElement.scrollTop = chatHistoryElement.scrollHeight;
+    input.value = '';
+  }
+
+  function onKeyDown(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      onRun();
+    }
+  }
+
+  runBtn.addEventListener('click', onRun);
+  undoBtn.addEventListener('click', undo);
+  input.addEventListener('keydown', onKeyDown);
+
+  copyCodeBtn.addEventListener('click', () => {
+    const htmlContent = content.innerHTML.trim();
+    const dynamicCss = dynamicStyles.textContent.trim();
+    const combinedJs = jsSnippets.join('\n\n').trim();
+
+    const fullHtml = `
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Exportierter Inhalt</title>
+  <style>
+${dynamicCss}
+  </style>
+</head>
+<body>
+  <div id="content">
+${htmlContent}
+  </div>
+
+  <script>
+${combinedJs}
+  </script>
+</body>
+</html>
+    `.trim();
+
+    codeArea.value = fullHtml;
+    codeDisplay.style.display = 'block';
+    codeArea.focus();
+    codeArea.select();
+
+    try {
+      document.execCommand('copy');
+      output.style.color = 'green';
+      output.textContent = '📋 Vollständiger HTML-Code kopiert!';
+    } catch (e) {
+      output.style.color = 'orange';
+      output.textContent = 'Code zum Kopieren markiert.';
+    }
+
+    setTimeout(() => (output.textContent = ''), 2000);
   });
 });
-
-function addToChatHistoryElement(mhistory) {
-  const htmlStrings = mhistory.messages.map((message) => {
-    return message.role === 'system'
-      ? ''
-      : `<div class="message ${message.role}">${message.content}</div>`;
-  });
-  return htmlStrings.join('');
-}

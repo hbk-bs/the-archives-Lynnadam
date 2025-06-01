@@ -1,26 +1,34 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lynn's Archiv - Übersicht</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dynamische Webseite mit Undo</title>
+  <link rel="stylesheet" href="style.css" />
+  <style id="dynamic-styles"></style>
 </head>
-
 <body>
-  <div class="chat-container">
-    <h1>Chat mit der mächtigen Katze 😼</h1>
-    <div class="chat-history"></div>
-    <form>
-      <input type="text" name="content" placeholder="Deine Nachricht..." required />
-      <button type="submit">Senden</button>
-    </form>
+  <h1 id="main-title"></h1>
+
+  <div id="content">
+
   </div>
 
-  
+  <div class="command-bar">
+    <input type="text" id="command" placeholder="Was soll sich ändern?" autocomplete="off" />
+    <button id="run">Ändern</button>
+    <button id="undo">Zurück</button>
+    <button id="copy-code" title="Code kopieren">C</button>
+  </div>
 
+  <div id="output" aria-live="polite"></div>
 
+  <div id="code-display" style="display:none; position:fixed; top:1rem; left:1rem; right:1rem; z-index:10000;">
+    <textarea id="code-area" style="width:100%; height:300px; font-family:monospace;"></textarea>
+  </div>
 
   <script src="index.js"></script>
 </body>
 </html>
+
+
