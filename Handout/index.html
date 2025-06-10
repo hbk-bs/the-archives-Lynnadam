@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lynn's Archiv - Übersicht</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+   
+      <nav>
+        <h1>Handouts</h1> 
+        <ul>
+          <li><a href="#teachable">Teachable Machine</a></li>
+          <li><a href="#htmlcss">HTML & CSS</a></li>
+          <li><a href="#p5js">p5.js</a></li>
+          <li><a href="#hardware">Physical Computing</a></li>
+          <li><a href="#syntax">Syntax & Coding-Grundlagen</a></li>
+        </ul>
+      </nav>
+      
+   
+  </header>
+
+  <main>
+
+    <section id="teachable">
+      <h2>Teachable Machine</h2>
+      <h3>Was ist Teachable Machine?</h3>
+      <p>
+        Teachable Machine ist eine einfache, webbasierte Anwendung von Google, mit der man Machine-Learning-Modelle trainieren kann. Sie funktioniert mit Bildern, Tönen oder Bewegungen. Das Ergebnis ist ein Modell, das in Webseiten, Spiele oder kreative Projekte eingebunden werden kann.
+      </p>
+    
+      <h3>Umgang mit Teachable Machine</h3>
+      <ul>
+        <li><strong>Bildvorbereitung:</strong> Bilder ggf. verkleinern oder zuschneiden, um Ladezeit und Modellgröße zu reduzieren. Mindestens 20–30 Bilder pro Klasse werden empfohlen.</li>
+        <li><strong>Modell trainieren:</strong> Projektart wählen (Bild, Audio oder Pose), Klassen erstellen, Trainingsdaten hochladen, auf „Train Model“ klicken.</li>
+        <li><strong>Modell exportieren:</strong> „Export Model“ > „TensorFlow.js“ wählen. Optional: In die Cloud hochladen und die öffentliche URL nutzen.</li>
+      </ul>
+    
+      <h3>Nützliche Links</h3>
+      <ul>
+        <li><a href="https://teachablemachine.withgoogle.com/" target="_blank"class="text-link">Teachable Machine Hauptseite</a></li>
+        <li><a href="https://teachablemachine.withgoogle.com/train/image" target="_blank"class="text-link">Trainieren mit Bildern</a></li>
+        <li><a href="https://github.com/SashiDo/awesome-teachable-machine" target="_blank"class="text-link">GitHub – Sammlung & Beispiele</a></li>
+      </ul>
+    
+      <h3>Begriffsklärungen</h3>
+      <ul>
+        <li><strong>ml5.js:</strong> JavaScript-Bibliothek für einfaches Machine Learning</li>
+        <li><strong>Label:</strong> Vorhergesagtes Ergebnis des Modells (z. B. „Hund“)</li>
+        <li><strong>Callback:</strong> Funktion, die nach Abschluss einer anderen Funktion aufgerufen wird</li>
+        <li><strong>Loop:</strong> Wiederholung zur kontinuierlichen Klassifizierung</li>
+        <li><strong>preload():</strong> Lädt wichtige Dateien vor dem Start in p5.js</li>
+        <li><strong>Classifier:</strong> ML-Modul zur Klassifizierung von Daten</li>
+        <li><strong>Array:</strong> Liste von Werten, z. B. <code>array[0]</code></li>
+        <li><strong>Rekursion:</strong> Funktion ruft sich selbst wieder auf</li>
+        <li><strong>Confidence:</strong> Sicherheit der Vorhersage (Wert zwischen 0 und 1)</li>
+      </ul>
+    
+      <h3>Beispiel-Code für die Nutzung mit p5.js</h3>
+      <pre><code> let imageModelURL = 'https://teachablemachine.withgoogle.com/models/6eL2SJyis/';
+
+      let classifier;
+    </code></pre>
+
+    <ul>
+      <li>imageModelURL: Hier steht der Link zum Modell, das bei Teachable Machine erstellt wurde.</li>
+      <li>classifier: Variable, in der später das Modell gespeichert wird.</li>
+       </ul>
+    
+    <pre><code> function preload() {
+      classifier = ml5.imageClassifier(imageModelURL + ‚model.json');
+    }
+    </code></pre>
+    <ul>
+  
+        <li>Die Funktion preload() lädt das Modell bevor setup() startet. So ist es rechtzeitig verfügbar.</li>
+        <li>Hier wird das Modell aus Teachable Machine vorgeladen, damit es später verfügbar ist.</li>
+        <li>ml5.imageClassifier(...): Damit wird das Bildklassifizierungsmodell von der URL geladen.</li>
+        <li>Die Bibliothek ml5.js kümmert sich darum, das Modell zu laden und mit der Webcam zu arbeiten.</li>
+         </ul>
+         <pre><code>function setup() {
+          createCanvas(320, 260);
+          video = createCapture(VIDEO);
+          video.size(320, 240);
+          video.hide();
+          classifyVideo();
+        }
+        </code></pre>
+        <ul>
+          <li>createCanvas(...): Erstellt eine Zeichenfläche, auf der wir alles anzeigen (z. B. Video, Text).</li>
+          <li>video = createCapture(VIDEO): Holt das Livebild der Webcam. p5.js speichert das Video in einer Variable.</li>
+          <li>video.hide(): Der Video-Stream wird im HTML ausgeblendet, aber im Hintergrund weiter genutzt. Wir nutzen ihn zwar, zeichnen ihn aber selbst im Canvas. </li>
+          <li>p5.js greift sich Frame für Frame aus dem Stream und zeigt sie im Canvas.</li>
+          <li>classifyVideo() startet die erste Klassifizierung.</li></ul>
+    <pre><code>function draw() {
+      background(0);
+      image(video, 0, 0);
+      fill(255);
+      textSize(16);
+      textAlign(CENTER);
+      text(label, width / 2, height - 4);
+    }
+    </code></pre>
+    <ul>
+      <li>image(video, 0, 0): Zeichnet den aktuellen Frame der Webcam ins Canvas.</li>
+      <li>text(label, ...): Zeigt das aktuell erkannte Label des Modells (z. B. „Tasse“, „Hand“, „X“).</li>
+    
+       </ul>
+       <pre><code>function classifyVideo() {
+        classifier.classify(video, gotResult);
+      }
+      </code></pre>
+      <ul>
+        <li>Übergibt das aktuelle Video-Frame an das ML-Modell.</li>
+        <li>Sobald das Modell fertig ist, wird die Funktion gotResult() aufgerufen → das ist ein Callback.</li>
+        
+         </ul>
+         <pre><code>function gotResult(results) {
+          label = results[0].label;
+          classifyVideo(); // Starte direkt wieder die nächste Analyse
+        }
+        </code></pre>
+        <ul>
+          <li>results ist eine Liste (Array) mit allen möglichen Ergebnissen, sortiert nach Sicherheit (Confidence).</li>
+          <li>results[0]: Das wahrscheinlichste Ergebnis.</li>
+          <li>.label: Der Name der erkannten Klasse (z. B. „Hund“, „A“, „Daumen hoch“).</li>
+          <li>Die Funktion ruft am Ende sich selbst indirekt wieder auf, dadurch entsteht eine Endlosschleife: Frame holen → klassifizieren → Ergebnis anzeigen → nächstes Frame …</li>
+           </ul>
+          
+      <h3>Weitere Beispiele</h3>
+      <p>
+        <strong>Bild-Drop:</strong> </p>
+      <ul>
+        <li><a href="https://snippets.inpyjamas.dev/p5js/ai/image-classifier-upload/" target="_blank"class="text-link">Code</a></li>
+        </ul> 
+    
+
+
+        <pre><code>canvas.dragOver(function () {
+          message = "Uh yeah, drop it";
+          bgcolor = "#ccc";
+        });
+        
+        canvas.dragLeave(function () {
+          bgcolor = "white";
+          message = defaultMessage;
+        });
+        
+        canvas.drop(handleFile, function () {
+          bgcolor = "white";
+          message = "";
+        });
+        </code></pre>
+        <ul>
+          <li>Diese Funktionen sorgen dafür, dass visuelles Feedback (Hintergrundfarbe, Text) angezeigt wird, wenn man mit dem Bild über das Canvas geht oder es loslässt.</li>
+        
+           </ul>
+           <pre><code>function handleFile(file) {
+            if (file.type === "image") {
+              img = createImg(file.data, "uploaded image");
+              img.hide();
+              classifyImage(img);
+            }
+          }
+          </code></pre>
+          <ul>
+            <li>Nimmt das Bild entgegen, versteckt es (wichtig, um es nicht doppelt darzustellen), und übergibt es an die Klassifizierungsfunktion.</li>
+          
+          </ul>
+
+
+           <p>
+            <strong>Zeichnen auf dem Canvas:</strong> </p>
+
+
+
+      <ul>
+        <li><a href="https://snippets.inpyjamas.dev/p5js/ai/image-classifier-drawing-on-canvas/" target="_blank"class="text-link">Code</a></li>
+      </ul> 
+    
+      <pre><code>cnv = createCanvas(200, 200);
+        cnv.parent("sketch");
+        background(255);
+      </code></pre>
+      <ul>
+        <li>Erstellt einen initialen Hintergrund. Wenn wir später das Canvas frei machen, müssen wir wieder einen Hintergrund setzten. </li>
+      
+      
+         </ul>
+
+         <pre><code>if (mouseIsPressed) {
+          let weight = dist(px, py, mouseX, mouseY);
+          strokeWeight(constrain(weight, 1, 10));
+          line(px, py, mouseX, mouseY);
+        }
+        px = mouseX;
+        py = mouseY;
+        </code></pre>
+        <ul>
+          <li>Wenn die Maus gedrückt ist, wird eine Linie gezeichnet.</li>
+          <li>line(px, py, mouseX, mouseY) verbindet den letzten Punkt mit dem aktuellen → ergibt einen Zeichenstrich.</li>
+          <li>Die Linienbreite basiert auf der Distanz zwischen dem vorherigen und aktuellen Punkt der Maus. </li>
+        
+           </ul>
+
+          
+           <h3>Markdown</h3>
+           <p>
+            Markdown ist ein leichtgewichtiger Markup-Standard, der darauf abzielt, Text menschenlesbar und gleichzeitig maschinenfreundlich zu strukturieren. Markdown-Dateien (.md) können in einfache HTML-Dokumente umgewandelt werden und helfen, Informationen klar und organisiert zu präsentieren. </p>
+
+
+            <ul>
+              <li>Verwendung in Repositories: Die README.md-Datei ist ein Markdown-Dokument, das zum Beispiel erklärt, was dein Projekt macht und wie es funktioniert.</li>
+              <li>Struktur: Markdown reduziert den Text auf grundlegende semantische Elemente (Überschriften, Listen, Links, Bilder usw.), die sowohl von Menschen als auch Maschinen leicht zu verstehen sind.</li>
+            </ul>
+
+            <p>Wie man Markdown richtig anwendet in Visual Studio Code (VSCode):
+            </p>
+
+            <ul>
+              <li>Stelle sicher, dass du Markdown als Standardsprache wählst. Klicke in der unteren Leiste auf die Code-Sprache und wähle Markdown aus.</li>
+              <li>Wenn du ein neues Projekt startest, speichere die Datei mit der Endung .md (z.B. README.md).</li>
+        
+            </ul>
+
+           <table class="markdown-table">
+             <thead>
+               <tr>
+                 <th>Bedeutung</th>
+                 <th>Markdown-Syntax</th>
+               </tr>
+             </thead>
+             <tbody>
+               <tr>
+                 <td>Heading 1 (größte Überschrift)</td>
+                 <td><code># Überschrift</code></td>
+               </tr>
+               <tr>
+                 <td>Heading 2 (mittlere Überschrift)</td>
+                 <td><code>## Überschrift</code></td>
+               </tr>
+               <tr>
+                 <td>Heading 3 (kleinste Überschrift)</td>
+                 <td><code>### Überschrift</code></td>
+               </tr>
+               <tr>
+                 <td>Liste (Bulletpoints)</td>
+                 <td><code>- Punkt 1</code>  <code>* Punkt 1</code></td>
+               </tr>
+               <tr>
+                 <td>Zitat (Blockquote)</td>
+                 <td><code>&gt; Dies ist ein Zitat.</code></td>
+               </tr>
+               <tr>
+                 <td>Inline-Code</td>
+                 <td><code>`console.log("Hello World!");`</code></td>
+               </tr>
+               <tr>
+                 <td>Fetter Text</td>
+                 <td><code>**Fett**</code></td>
+               </tr>
+               <tr>
+                 <td>Kursiver Text</td>
+                 <td><code>*Kursiv*</code></td>
+               </tr>
+               <tr>
+                 <td>Link</td>
+                 <td><code>[Text](URL)</code></td>
+               </tr>
+               <tr>
+                 <td>Bild</td>
+                 <td><code>![Beschreibung](URL)</code></td>
+               </tr>
+             </tbody>
+           </table>
+           
+           <p>Markdown-Erweiterungen und Tools in VSCode:
+          </p>
+          <ul>
+            <li>Markdown <a href="https://marketplace.visualstudio.com/items/?itemName=yzhang.markdown-all-in-one" target="_blank"class="text-link" target="_blank" class="text-link">All in One</a>:
+              Ein nützliches VSCode-Plugin, das dir beim Bearbeiten und Vorschauen von Markdown-Dateien hilft. </li>
+            <li>Markdown <a href="https://marketplace.visualstudio.com/items/?itemName=shd101wyy.markdown-preview-enhanced" target="_blank" class="text-link">Preview Enhanced</a>:
+              Zeige eine Vorschau deiner Markdown-Datei an, um zu sehen, wie sie als HTML aussieht. Du kannst die Datei auch direkt als HTML exportieren. </li>
+            <li>Markdown <a href="https://marketplace.visualstudio.com/items?itemName=fmoronzirfas.markdown-to-html" target="_blank" class="text-link">to HTML</a>:
+              Ein weiteres nützliches Tool, um HTML aus Markdown zu generieren. </li>
+          </ul>
+    
+  
+
+    <h3>Umgang mit Künstlicher Intelligenz</h3>
+
+    <p>Wenn KIs mit veränderlichen Daten arbeiten, wie z.B. aktuellen Ereignissen, fehlt oft der Kontext im Training. Um dieses Problem zu lösen, müssen wir der KI explizit Informationen mitgeben, damit sie die Daten korrekt verarbeiten kann. Wenn wir möchten, dass sich das Modell auf bestimmte Weise verhält, müssen wir es mit entsprechendem Kontext versorgen.
+    </p>
+
+    <p>Gerade bei der Arbeit mit KIs wie ChatGPT ist der Kontext entscheidend: Um präzisere Antworten zu erhalten, ist es wichtig, der KI klare Anweisungen zu geben und den Hintergrund einer Frage oder Aufgabe zu erklären. Der Text wird dabei in kleinere Einheiten zerlegt, die sogenannten Tokens. Ein Token kann ein Wort, ein Satzzeichen oder ein Teil eines Wortes sein. Je mehr Kontext in Form von Tokens zur Verfügung steht, desto besser kann die KI die Anfrage verstehen und darauf reagieren.
+    </p>
+
+  </section>
+
+    <section id="htmlcss">
+      <h2>HTML and CSS</h2>
+      <p> At the beginning, we focused solely on HTML and CSS, the essential components of a website's structure. We learned how to organize texts, images, and links using HTML (Hypertext Markup Language). With CSS (Cascading Style Sheets), we were able to style our code, defining colors, fonts, and spacing. </p>
+      <p> At this point, I was under the misconception that coding wasn’t even that hard. The approach and implementation were clear, and it felt more like a task of memorizing all the important commands. </p>
+    </section>
+
+    <section id="p5js">
+      <h2>p5.js</h2>
+      <p> As p5.js came, so did the tears. This JavaScript library is, in itself, a fantastic way to develop animations and graphics directly within the code. With our first task, where we had to represent <a href="https://hbk-bs.github.io/the-archives-Lynnadam/Archiv/p5.js/" target="_blank" class="text-link">perspectives</a> graphically, it honestly felt more like digital drawing. </p>
+      <p> However, there are of course many more aspects that can be implemented through p5.js. It’s truly overwhelming what you can achieve with just a few lines of code. We not only learned how to create <a href="https://hbk-bs.github.io/the-archives-Lynnadam/Archiv/interaction/" target="_blank" class="text-link">interactive</a> graphics or websites, but also how to generate <a href="https://hbk-bs.github.io/the-archives-Lynnadam/Archiv/motion/" target="_blank" class="text-link">movements</a>. This made things a bit more complicated, as many new concepts were introduced, such as arrays (a way to collect elements in an ordered manner and store them in a variable). </p>
+<p> We are certainly just at the beginning of learning to program, but it’s amazing that with a bit of research, when you have an idea for something like a game, you can at least create the basic concept. </p>
+</section>
+
+    <section id="hardware">
+      <h2>Physical Computing</h2>
+      
+<p> It was time to turn our attention to hardware. In Physical Computing, we worked with components such as sensors to connect physical objects with the digital world. We used the Arduino IDE to control LED lights through coding. </p>
+<p> At the end of this topic, and thus at the end of the semester, we implemented the project <a href="https://hbk-bs.github.io/the-archives-Lynnadam/Archiv/blinkenlichten" target="_blank" class="text-link">Blinkenlichten</a>, where we applied the previously learned concepts of Physical Computing. </p>
+</section>
+
+  <section  id="syntax">
+    <h2>Syntax & Coding-Grundlagen</h2>
+    
+    
+    <h3>Konzepte und Elemente</h3>
+    <p><strong>Struktur:</strong></p>
+    <ul>
+      <li><strong>Header </strong>(Der Kopfbereich, der oft Titel, Logos oder Navigation enthält. Er gibt den Einstiegspunkt in eine Seite oder Anwendung.)</li>
+      <li><strong>Navigation (Nav) </strong>(Ein Bereich, der Links oder Menüs zur Navigation innerhalb der Seite oder Anwendung bereitstellt.)</li>
+      <li><strong>Main </strong>(Der Hauptinhalt der Seite, der den wichtigsten Text, Bilder oder Funktionen enthält.)</li>
+      <li><strong>Section </strong>(Ein Abschnitt innerhalb des Hauptinhalts, um unterschiedliche Themen oder Bereiche zu trennen.)
+      </li>
+    
+    </ul>
+
+
+    <p><strong>Typografie:</strong></p>
+
+    <ul>
+      <li><strong>Überschriften (z.B. h2, h3)</strong>(Überschriften gliedern den Text in Kapitel oder Abschnitte und geben eine Hierarchie vor.)</li>
+      <li><strong>Absatz (p) </strong>(Ein Textblock, der normalen Fließtext enthält.)</li>
+      <li><strong>Listen (ul, li) </strong>(Eine ungeordnete Liste (ul) enthält mehrere Einträge (li), z.B. Aufzählungen.)</li>
+    </ul>
+
+    <p><strong>Interaktivität & Styling:</strong></p>
+    <ul>
+      <li><strong>Links (a) </strong>(Elemente, die Nutzer zu anderen Seiten oder Bereichen führen.)</li>
+      <li><strong>Klassen (.text-link) </strong>(Klassen sind Kennzeichnungen für Elemente, mit denen man gezielt Stil- oder Verhaltensregeln zuweisen kann.)</li>
+      <li><strong>Hover-Effekt </strong>(Eine Änderung des Aussehens, wenn man mit der Maus über ein Element fährt, z.B. Farbwechsel bei Links.)</li>
+      <li><strong>Responsive Design (@media) </strong>(Technik, damit sich das Layout an verschiedene Bildschirmgrößen anpasst, z.B. für Smartphones oder große Monitore.)</li>
+    </ul>
+    <h3>Diese Seite</h3>
+
+
+    <table class="markdown-table">
+      <thead>
+        <tr>
+          <th>Bedeutung</th>
+          <th>HTML</th>
+          <th>CSS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Navigation mit Links</td>
+          <td><code>&lt;nav&gt;&lt;ul&gt;&lt;li&gt;&lt;a href="#..."&gt;&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/nav&gt;</code></td>
+          <td><code>nav ul { display: flex; gap: 20px; }</code></td>
+        </tr>
+        <tr>
+          <td>Seitenabschnitt</td>
+          <td><code>&lt;section id="..."&gt;&lt;/section&gt;</code></td>
+          <td><code>section { background: white; }</code></td>
+        </tr>
+        <tr>
+          <td>Große Überschrift</td>
+          <td><code>&lt;h2&gt;...&lt;/h2&gt;</code></td>
+          <td><code>h2 { color: #2575fc; text-align: center; }</code></td>
+        </tr>
+        <tr>
+          <td>Mittlere Überschrift</td>
+          <td><code>&lt;h3&gt;...&lt;/h3&gt;</code></td>
+          <td><code>h3 { margin-top: 40px; border-left: 4px solid #2575fc; }</code></td>
+        </tr>
+        <tr>
+          <td>Absatz</td>
+          <td><code>&lt;p&gt;...&lt;/p&gt;</code></td>
+          <td><code>p { font-size: 1rem; color: #555; }</code></td>
+        </tr>
+        <tr>
+          <td>Liste</td>
+          <td><code>&lt;ul&gt;&lt;li&gt;...&lt;/li&gt;&lt;/ul&gt;</code></td>
+          <td><code>ul { padding-left: 10px; } li { margin-bottom: 10px; }</code></td>
+        </tr>
+        <tr>
+          <td>Links</td>
+          <td><code>&lt;a href="..." target="_blank"class="text-link"&gt;...&lt;/a&gt;</code></td>
+          <td><code>.text-link { color: #2575fc; font-weight: bold; }</code> <code>.text-link:hover { transform: scale(1.2); }</code></td>
+        </tr>
+        <tr>
+          <td>Tabelle</td>
+          <td><code>table class="table"&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;</code></td>
+          <td><code>.table { width: 100%; border-collapse: collapse; }</code></td>
+        </tr>
+        <tr>
+          <td>Codeblock</td>
+          <td><code>&lt;pre&gt;&lt;code&gt;...&lt;/code&gt;&lt;/pre&gt;</code></td>
+          <td><code>pre { background: #f0f0f0; padding: 15px; }</code></td>
+        </tr>
+        <tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+    <h3>Grundlagen JS</h3>
+
+    <table class="markdown-table">
+      <thead>
+        <tr>
+          <th>Bedeutung</th>
+          <th>Syntax und *Beispiele*</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Variable deklarieren (neu)</td>
+          <td><code>let *x* = *5*;</code></td>
+        </tr>
+        <tr>
+          <td>Konstante (nicht veränderbar)</td>
+          <td><code>const *name* = "*Lynn*";</code></td>
+        </tr>
+        <tr>
+          <td>Funktion definieren</td>
+          <td><code>function *greet*() { console.log(*"Hallo!"*); }</code></td>
+        </tr>
+        <tr>
+          <td>Funktion aufrufen</td>
+          <td><code>*greet*();</code></td>
+        </tr>
+        <tr>
+          <td>Bedingung (if-Anweisung)</td>
+          <td><code>if (*x &gt; 3*) { console.log(*"Größer als 3"*); }</code></td>
+        </tr>
+        <tr>
+          <td>Wiederholung (Schleife)</td>
+          <td><code>for (let i = 0; i &lt; 5; i++) { console.log(i); }</code></td>
+        </tr>
+        <tr>
+          <td>Array (Liste)</td>
+          <td><code>let farben = ["rot", "grün", "blau"];</code></td>
+        </tr>
+        <tr>
+          <td>Zugriff auf Array-Element</td>
+          <td><code>farben[0]; // ergibt "rot"</code></td>
+        </tr>
+        <tr>
+          <td>Objekt erstellen</td>
+          <td><code>let person = { name: "Lynn", alter: 22 };</code></td>
+        </tr>
+        <tr>
+          <td>Eigenschaft auslesen</td>
+          <td><code>person.name; // ergibt "Lynn"</code></td>
+        </tr>
+        <tr>
+          <td>Konsole zum Debuggen</td>
+          <td><code>console.log("Hallo Welt");</code></td>
+        </tr>
+        <tr>
+          <td>Zufallszahl erzeugen</td>
+          <td><code>let z = random(0, 10);</code></td>
+        </tr>
+        <tr>
+          <td>Mausposition abfragen (p5.js)</td>
+          <td><code>mouseX, mouseY</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+
+    <p><strong>Variablen und Funktionen</strong></p>
+
+  
+    <p>JavaScript führt Anweisungen Schritt für Schritt von oben nach unten aus – Zeile für Zeile. Dabei können wir bestimmte Informationen speichern, z. B. in sogenannten Variablen, und ganze Befehlspakete zusammenfassen, die wir bei Bedarf immer wieder verwenden können – das geschieht mit Funktionen.</p>
+    <pre><code>let name = "Max";
+
+      function greet() {
+        console.log("Hallo, " + name + "!");
+      }
+      
+      greet();
+      </code></pre>
+
+  <ul>
+      <li>Mit let wird eine <strong>Variable</strong> erstellt. Eine Variable ist wie eine kleine Box, in der du etwas speichern kannst. Die <strong>Variable</strong> heißt hier <strong>name</strong>.</li>
+      <li>In die Box legen wir den Text <strong>"Max"</strong>. Die <strong>Variable</strong> <strong>name</strong> enthält jetzt den Wert <strong>"Max"</strong>. </li>
+      <li>Dann wird die Funktion mit dem Namen <strong>greet</strong> definiert. Eine Funktion ist ein Befehlspaket, das man mehrmals verwenden kann, in dem man <strong>greet()</strong> aufruft. Dann wird alles, was zwischen den geschweiften Klammern <strong>{ }</strong> steht, ausgeführt.  </li>
+      <li><strong>console.log(...)</strong> bedeutet: Schreibe etwas in die Konsole (also das Ausgabefenster im Browser oder Editor).</li>
+      <li><strong>"Hallo, "</strong> ist ein fester Text, das <strong>+</strong> verbindet (verknüpft) die einzelnen Textstücke und Variablen zu einem einzigen Text, <strong>name</strong> ist <strong>"Max"</strong> (aus der Variable oben) und <strong>"!" </strong>ist wieder fester Text.</li>
+      <li>Mit <strong>greet()</strong> wird die Funktion aufgerufen, in diesem Fall: Es wird "Hallo, Max!" in die Konsole geschrieben.</li>
+    </ul>
+
+
+
+    <p><strong>Konstante und Bedingung</strong></p>
+
+    <p>In JavaScript kann man mit Konstanten (const) feste Werte speichern, die sich im Laufe des Programms nicht mehr ändern sollen. Mit Bedingungen (if) kann man entscheiden, ob ein bestimmter Teil des Codes ausgeführt werden soll – je nachdem, ob etwas true oder false ist. </p>
+    
+
+    <pre><code> const age = 18;
+      const isAdult = (age >= 18);  
+      
+      if (isAdult === true) {
+        console.log("Du bist volljährig.");
+      }
+      </code></pre>
+
+  <ul>
+      <li>Es wird eine <strong>Konstante</strong> namens <strong>age</strong> deklariert und ihr der Wert <strong>18</strong> zugewiesen.
+      <strong>const</strong> bedeutet, dass dieser Wert später nicht mehr geändert werden kann.</li>
+      <li>Es wird eine weitere <strong>Konstante isAdult</strong> deklariert. Eine <strong>Konstante</strong> kann man praktisch beliebig benennen, solange der Name den Regeln für JavaScript-Variablennamen entspricht.</li>
+      <li>Rechts vom Gleichheitszeichen steht der Ausdruck <strong>age >= 18</strong>, eine <strong>Bedingung</strong>, die überprüft, ob <strong>age</strong> größer oder gleich <strong>18 </strong>ist.</li>
+      <li>Da <strong>age</strong> den Wert <strong>18</strong> hat (durch: <strong>const age = 18;</strong>), ergibt die Bedingung wahr (<strong>true</strong>). Der Wert <strong>true</strong> wird durch die Auswertung des Vergleichs erzeugt und in die Variable <strong>isAdult</strong> gespeichert.</li>
+      <li>Es wird eine <strong>if-Bedingung</strong> ausgeführt, die lautet: Prüfe, ob <strong>isAdult</strong> gleich (<strong>===</strong>) <strong>true</strong> ist.</li>
+      <li>Da <strong>isAdult </strong>tatsächlich <strong>true</strong> ist, wird der Codeblock innerhalb der <strong>{}</strong> ausgeführt, also gibt diese Anweisung den Text „Du bist volljährig.“ in der Entwicklerkonsole aus.</li>
+     
+    </ul>
+
+    <p><strong>Arrays und Schleifen</strong></p>
+    <p>Arrays dienen dazu, mehrere Werte übersichtlich zusammen in einer einzigen Variablen zu speichern.
+      Wiederholungen (Schleifen) ermöglichen es, bestimmte Anweisungen mehrmals automatisch auszuführen, zum Beispiel um jedes Element in einem Array nacheinander zu verarbeiten, ohne den Code dafür mehrfach schreiben zu müssen.</p>
+    
+
+    <pre><code>let farben = ["Rot", "Blau", "Grün", "Gelb"]; 
+
+      for (let i = 0; i < farben.length; i++) {
+        console.log("Farbe " + (i + 1) + ": " + farben[i]);
+      }
+       </code></pre>
+
+  <ul>
+      <li>Es wird eine Variable farben erstellt, die ein Array enthält.
+        Dieses Array besteht aus vier Texten (Strings): "Rot", "Blau", "Grün" und "Gelb".</li>
+      <li>Es wird eine for-Schleife gestartet. Eine Programmier-Anweisung, die es ermöglicht, einen bestimmten Code-Block mehrmals hintereinander auszuführen — also eine Wiederholung.</li>
+        <li> Dabei wird eine Zählvariable i verwendet und let i = 0 initialisiert, da Arrays in JavaScript nullbasierent sind. Das erste Element also den Index 0 hat. Danach wird i nach jedem Durchlauf automatisch erhöht (meist mit i++), also um 1 erhöht.</li>
+      <li>Mit der Bedingung i < farben.length wird geprüft, ob i kleiner ist als die Anzahl der Elemente im Array farben (farben.length).
+        Solange diese Bedingung erfüllt ist, läuft die Schleife weiter (i++).</li>
+      <li>Mit console.log() wird ein Text ausgegeben. "Farbe " und ":" wird als Text hinzugefügt. Es wird i + 1 hinzugefügt, damit die Aufzählung des aktuellen Index im Array nicht bei 0 beginnt und mit farben[i] wird der Inhalt an der Stelle i im Array farben ergänzt.</li>
+      <li>Danach wird i um 1 erhöht (i++), und die Schleife prüft wieder, ob i < farben.length gilt. Dieser Vorgang wird so lange wiederholt, bis alle Farben aus dem Array ausgegeben sind.</li>
+     
+    </ul>
+
+    <p><strong>Zufallswert und Benutzerinteraktion</strong></p>
+    <p></p>
+
+    <pre><code> 
+  let name = "Sara"; 
+
+  let hobbies = ["Lesen", "Schwimmen", "Programmieren"]; 
+      
+    function checkDrivingPermission(age) {
+    const legalDrivingAge = 18; 
+    const isAllowed = (age >= legalDrivingAge); 
+      
+  let result = "";
+      
+  if (isAllowed) {
+    result += name + " darf Auto fahren.&lt;br>";
+  } else {
+    result += name + " darf noch kein Auto fahren.&lt;br>";
+  }
+      
+  result += name + " hat folgende Hobbys:&lt;br>&lt;ul>";
+      
+  for (let i = 0; i < hobbies.length; i++) {
+    result += "&lt;li>" + hobbies[i] + "&lt;/li>";
+  }
+      
+  result += "&lt;/ul>";
+      
+  let random = Math.floor(Math.random() * hobbies.length);
+  let randomHobby = hobbies[random];
+  
+  result += "&lt;br>Ein zufälliges Hobby von " + name + " ist: &lt;strong>" 
+  + randomHobby + "&lt;/strong>";
+      
+  return result;
+  }
+      
+  document.getElementById("checkBtn").addEventListener
+  ("click", () => {
+   const age 
+   = parseInt(document.getElementById("ageInput").value, 10);
+   const output = checkDrivingPermission(age);
+   document.getElementById("output").innerHTML = output;
+  });
+      </code></pre>
+
+  <ul>
+      <li>Es wird die <strong>Variable name </strong>erstellt und mit dem Text "<strong>Sara</strong>" belegt.</li>
+      <li>Es wird das <strong>Array hobbies</strong> erstellt, das drei Hobbys enthält.</li>
+      <li>Es wird die <strong>Funktion checkDrivingPermission</strong> definiert. (<strong>age</strong>) ist ein sogenannter Parameter – das bedeutet:
+        Die Funktion erwartet eine Eingabe, nämlich eine Zahl, die das Alter darstellt. Diese Zahl bekommt die Funktion später durch den <strong>EventListener</strong>.</li>
+      <li>Es wird die <strong>Konstante legalDrivingAge</strong> erstellt, die das gesetzliche Mindestalter zum Autofahren speichert – nämlich <strong>18</strong>.</li>
+      <li>Mit der <strong>Konstanten isAllowed</strong> wird geprüft, ob das eingegebene Alter größer oder gleich 18 (<strong>const legalDrivingAge</strong>) ist. Das Ergebnis ist <strong>true</strong> oder <strong>false</strong> – und wird in <strong>isAllowed</strong> gespeichert.</li>
+      <li>Mit let <strong>result = ""</strong> wird eine leere <strong>Text-Variable</strong> namens <strong>result</strong> erstellt. In diese Variable wird Schritt für Schritt Text hinzugefügt, damit man am Ende alles zusammen anzeigen kann.</li>
+      <li>Danach wird eine <strong>Bedingung</strong> (<strong>if { ... } else { ... }</strong>) überprüft: Wenn <strong>isAllowed true</strong> ist (also (<strong>age</strong>) ≥ <strong>legalDrivingAge</strong>), wird ins <strong>result</strong> mit <strong>+=</strong> hinzugefügt:
+        die Variable <strong>name </strong>(Sara) und „darf Auto fahren.“ Wenn <strong>isAllowed false</strong> ist, wird hinzugefügt:
+        die Variable <strong>name</strong> und „darf noch kein Auto fahren.“ Jeweils mit einem Zeilenumbruch (<strong>&lt; br ></strong>).</li>
+      <li>Zum <strong>result</strong> wird eine Überschrift für die Hobby-Liste aus <strong>name</strong> und Text erstellt. Damit die Hobbys übersichtlich und als Liste untereinander angezeigt werden – werden Zeilenumbruch (<strong>< br ></strong>) und Aufzählungspunkten (<strong>< ul ></strong>) hinzugefügt.</li>
+      <li>Um die Liste zu füllen, wird eine <strong>Schleife</strong> gestartet, die durch das <strong>Array hobbies</strong> geht. Für jedes Hobby im <strong>Array</strong> wird ein Listeneintrag (<strong>< li >...< /li></strong>) erzeugt und ins <strong>result</strong> hinzugefügt. Mit <strong>+= "< /ul >"</strong> wird die Liste beendet.</li>
+      <li>Danach wird ein zufälliges Hobby aus dem <strong>Array</strong> genommen und als <strong>Variable random</strong> definiert. Dies wird mit <strong>Math.floor()</strong> gemacht, eine Funktion, die zur Math-Bibliothek gehört und ganze Zahlen zurück gibt. Die Zahl wird erimmelt, indem <strong>Math.random()</strong> eine zufällige Zahl zwischen 0 und 1 zurück gibt. Durch die Rechnung <strong>Math.random() * hobbies.length</strong> (also 3) wird daraus eine Zahl zwischen 0 und fast 3. <strong>Math.floor()</strong> rundet die Zahl dann nach unten auf die nächste ganze Zahl.</li>
+      <li>Nun wird die <strong>Variable randomHobby</strong> erstellt, in der das Element aus dem <strong>Array hobbies</strong> basierend auf der Zufallszahl gespeichert wird (<strong>hobbies[random]</strong>). Dieses wird im <strong>result</strong> mit Text hinzugefügt.</li>
+      <li>Mit <strong>return result;</strong> gibt die Funktion den gesamten Text (mit Info zum Autofahren, allen Hobbys und dem Zufallshobby) zurück.</li>
+      <li>Der interaktive Teil steht ganz unten, weil er nur funktionieren kann, wenn vorher alles schon definiert ist (Funktion, Array, Variablen etc.). Hier such sich JavaScript mit <strong>document.getElementById("checkBtn")</strong> zuerst Zugriff auf den Button der in HTML hinzugefügt wurde und hängt einen "<strong>Event Listener</strong>" an, damit auch etwas passiert, wenn der Benutzer mit der Webseite interagiert (<strong>("click",</strong>). </li>
+      <li>Mit <strong>() => { ... }</strong> wird gesagt, dass eine <strong>Funktion</strong> ausgeführt werden soll, wenn der Button geklickt wird.</li> 
+      <li>In der <strong>Konstante age</strong> wird die Zahl gespeichert, die der Benutzer eingegeben hat. Die Funktion <strong>parseInt(..., 10)</strong> nimmt den Text (<strong>String</strong>), den der Code aus einem Eingabefeld (<strong>input</strong>) holt und macht daraus eine ganze Zahl (<strong>Integer</strong>), mit der JavaScript arbeiten kann. Die Funktion sucht im HTML das Eingabefeld mit der ID <strong>ageInput</strong> und bekommt den Wert durch <strong>.value</strong>. </li>
+      <li><strong>const output</strong> übergibt dann der am Anfang definierten <strong>Funktion checkDrivingPermission</strong> die eingegebene Zahl (Alter) und der Rückgabewert (<strong>return</strong>) wird in <strong>output</strong> gespeichert.</li>
+      <li>Danach wir der Text in einem HTML-Element mit der ID <strong>output</strong> angezeigt. (<strong>document.getElementById("output".innerHTML)= output</strong>).</li>
+
+    </ul>
+
+    
+
+    <p>Beispiel HTML:</strong>
+    <pre><code> 
+      &lt;body>
+      &lt;h1>Führerschein-Check&lt;/h1>
+      
+      &lt;label for="ageInput">Alter eingeben: &lt;/label>
+      &lt;input type="number" id="ageInput" value="20" />
+      &lt;button id="checkBtn">Prüfen&lt;/button>
+      
+      &lt;div id="output">&lt;/div>
+      &lt;/body> 
+    </code></pre>
+
+    <iframe src="test/index.html" class="iframe" loading="lazy"></iframe>
+   
+  </section>
+</main>
+
+  
+
+
+
+  <script src="index.js"></script>
+</body>
+</html>
