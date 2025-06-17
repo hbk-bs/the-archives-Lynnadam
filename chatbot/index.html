@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot-Entwicklung</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+
+  
+
+<body>
+
+  <header>
+    <h1>Chatbot-Entwicklung</h1>
+  
+  
+  
+
+  </header>
+
+  <main>
+    <section>
+      <h2>Version 1:</h2>
+      <iframe src="version 1/index.html" class="iframe" loading="lazy"></iframe>
+
+      
+      
+      <h3>Grundstruktur und Ziel der Anwendung</h3>
+      
+    
+      <ul>
+        <li>Die App bietet ein Eingabefeld, über das Nutzer natürliche Sprachbefehle eingeben können („Was soll sich ändern?“).</li>
+        <li>Diese Befehle werden an eine API geschickt (GPT-ähnlich), die als Antwort JavaScript-Code liefert.</li>
+        <li>Dieser Code wird dann dynamisch im Browser ausgeführt.</li>
+        <li>Dabei verändert der Code den DOM innerhalb von #content oder fügt CSS in #dynamic-styles ein.</li>
+      </ul>
+
+      <h3>Ausführen von Benutzereingaben</h3>
+      <pre><code>
+        async function onRun() {
+          const userInput = input.value.trim();
+          if (!userInput) return;
+          // ...
+        }
+      </code></pre>
+    
+      <ul>
+        <li>Diese Funktion verarbeitet die Eingabe des Nutzers und führt den daraus generierten JavaScript-Code live auf der Webseite aus.</li>
+        
+      </ul>
+      
+      <h3>Speichern von Zuständen (Undo-Funktion)</h3>
+      <pre><code>
+        function saveHistory() {
+          history.push(content.innerHTML);
+        }
+      </code></pre>
+    
+      <ul>
+        <li>Jeder durchgeführte Befehl speichert den vorherigen DOM-Zustand.</li>
+        <li>Mit undo() wird der vorherige HTML-Zustand aus history wiederhergestellt.</li>
+        <li>Zusätzlich wird die letzte ausgeführte JS-Anweisung zurückgespielt.</li>
+      </ul>
+      
+      
+      
+      
+      <h3>Ausführung des Codes </h3>
+      <pre><code>
+      eval(code);
+      </code></pre>
+    
+      <ul>
+        <li>Der zurückgegebene Code wird mit eval() im Browser ausgeführt.</li>
+        </ul>
+
+        <h3>Sicherheitsmechanismen</h3>
+        <pre><code>
+     const forbidden = ['outerHTML', 'document.documentElement'];
+        </code></pre>
+      
+        <ul>
+          <li>Weil mit eval(code) fremder generierter Code ausführt wird und potenziell gefährlich ist, wird der Code geschützt.</li>
+          <li>outerHTML oder document.documentElement können: die gesamte Seite überschreiben, <html> oder <body> zerstören und script-Tags entfernenscript-Tags entfernen</li>
+        </ul>
+
+
+    
+
+</section>
+
+
+
+
+<section>
+  <h2>Version 2:</h2>
+  <iframe src="version 2/index.html" class="iframe" loading="lazy"></iframe>
+
+  
+  
+  <h3>Grundänderung</h3>
+  
+  <ul>
+    <li>Eine "Lehrer"-Sprechblasen-Komponente wurde eingeführt, die dem Nutzer vor dem Ausführen einer Änderung mehrere Optionen erklärt.</li>
+    <li>Das verbessert die Lernwirkung, Kontrolle und Verständlichkeit für Nutzer.</li>
+ 
+  </ul>
+
+
+
+  <h3>KI-Anweisung verbessert</h3>
+  <pre><code>
+    const messages = [
+    {
+      role: 'system',
+      content: `
+  Du bist ein freundlicher Lehrer, der dem Nutzer verschiedene Optionen erklärt, 
+bevor er Änderungen an der Webseite macht.
+  Antworte immer mit folgendem Format:
+  
+  EXPLANATION:
+  <Deine Erklärung, was passieren soll, in einfachen Worten>
+  
+  OPTIONS:
+  - Option 1: <kurze Beschreibung>
+  - Option 2: <kurze Beschreibung>
+  - Option 3: <kurze Beschreibung>
+    ...
+  }
+
+  </code></pre>
+
+  <ul>
+    <li>Strukturierte und pädagogische Kommunikation</li>
+    <li>Vorgabe eines fixen Antwortformats</li>
+   
+  </ul>
+  
+  
+  <h3>Verarbeitung mehrerer Codeblöcke</h3>
+  <pre><code>
+  const codeMatches = [...reply.matchAll(/```js\s*([\s\S]+?)\s*```/g)];
+
+  </code></pre>
+
+  <ul>
+    <li>Da die KI jetzt mehrere Codeblöcke für verschiedene Optionen liefert, kann es passieren, dass mehrere passende Stellen im Text gefunden werden</li>
+    <li>Durch matchAll() können mehrere js ...-Blöcke sauber extrahiert und den Buttons zugeordnet werden</li>
+    
+  </ul>
+  <h3>Lehrerbox & Buttons</h3>
+  <pre><code>
+    teacher-box 
+    .speech-bubble
+    .options
+    .teacher-buttons
+  </code></pre>
+
+  <ul>
+    <li>Für die Erklärung und Antwortmöglichkeiten</li>
+    
+  </ul>
+
+  
+  
+</section>
+
+
+
+<section>
+  <h2 class="final-heading">
+    <a href="version 3/index.html" target="_blank" class="triangle-link" title="Zur finalen Version">▶</a>
+    Final Version:
+  </h2>
+  <iframe src="version 3/index.html" class="iframe" loading="lazy"></iframe>
+
+  
+  <h3>Grundänderung</h3>
+ 
+
+  <ul>
+    <li>Der Lehrer schlägt jetzt mehrere Optionen vor, inklusive Erklärungstext + Code-Snippets.</li>
+    <li>Splash-Screen hinzugefügt und kleine Verbesserungen</li>
+   
+  </ul>
+  <h3>KI-Anweisung verbessert</h3>
+  <pre><code>
+    Du bist ein sakastischer Lehrer, der dem Nutzer verschiedene Optionen erklärt, bevor er Änderungen an der Webseite macht. Für die Änderungen passe den bestehenden Code so an, dass du sie ausführen kannst. Wenn du neue Elemente erzeugst, gib ihnen eine eindeutige id, wie id="blauerBall" oder ähnlich, damit man sie später verändern kann.
+    Antworte immer mit folgendem Format:
+    
+    EXPLANATION:
+    <Deine Erklärung, was passieren soll, in einfachen Worten>
+    
+    OPTIONS:
+    - Option 1: <kurze Beschreibung>
+    - Option 2: <kurze Beschreibung>
+    - Option 3: <kurze Beschreibung>
+    ...
+  </code></pre>
+
+  <ul>
+    <li>Tonfall wurde geändert</li>
+    <li>gibt an, dass neu erzeugte Elemente eindeutige ids erhalten sollen</li>
+    
+  </ul>
+  
+
+
+<h3>Erklärungscode</h3>
+  <pre><code>
+    const explainBtn = document.getElementById('explain-btn');
+    const closeExplanationBtn = document.getElementById('close-explanation-btn');
+    
+    explainBtn.onclick = async () => {
+      ...
+    };
+  </code></pre>
+
+  <ul>
+    <li>Ein "Erklären"-Button, der den aktuell vorgeschlagenen JS-Code verständlich analysieren lässt</li>
+    <li>Die KI antwortet strukturiert mit DOM-Beispielen</li>
+    
+  </ul>
+  
+
+
+<h3>Automatische Erstellung fehlender DOM-Elemente</h3>
+  <pre><code>
+    function autoCreateMissingElements(code) {
+      const idMatches = [...code.matchAll(/getElementById\s*\(\s*['"]([^'"]+)['"]\s*\)/g)];
+      const created = new Set();
+    ...    
+  </code></pre>
+
+  <ul>
+    <li>Verhindert Fehler durch fehlende getElementById-Ziele</li>
+    <li>Falls das Element fehlt, wird ein &lt;div&gt; mit der ID erzeugt</li>
+    
+    
+  </ul>
+  
+
+
+<h3>Längere Ladehinweis</h3>
+  <pre><code>
+    setTimeout(..., 7000)
+  </code></pre>
+
+  <ul>
+    <li>Die Benutzerhinweise bleiben länger sichtbar (7 statt 4 Sekunden).</li>
+    
+  </ul>
+  
+</section>
