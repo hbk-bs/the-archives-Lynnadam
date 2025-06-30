@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Exportierter Inhalt</title>
+  <style>
+a { color: black; }
+  </style>
+</head>
+<body>
+  <div id="content">
+<h1>Baumarten</h1><nav><ul><li><a href="#einleitung">Einleitung</a></li><li><a href="#laubbäume">Laubbäume</a></li><li><a href="#nadelbäume">Nadelbäume</a></li><li><a href="#exotische-bäume">Exotische Bäume</a></li></ul></nav><section id="einleitung" style="border: 1px solid rgb(204, 204, 204); padding: 16px; margin: 8px 0px; background-color: rgb(249, 249, 249); border-radius: 4px;"><h2>Einleitung</h2><p>Informationen über einleitung.</p></section><section id="laubbäume" style="border: 1px solid rgb(204, 204, 204); padding: 16px; margin: 8px 0px; background-color: rgb(249, 249, 249); border-radius: 4px;"><h2>Laubbäume</h2><p>Informationen über laubbäume.</p><h3>Beliebte Laubbäume</h3></section><section id="nadelbäume" style="border: 1px solid rgb(204, 204, 204); padding: 16px; margin: 8px 0px; background-color: rgb(249, 249, 249); border-radius: 4px;"><h2>Nadelbäume</h2><p>Informationen über nadelbäume.</p></section><section id="exotische-bäume" style="border: 1px solid rgb(204, 204, 204); padding: 16px; margin: 8px 0px; background-color: rgb(249, 249, 249); border-radius: 4px;"><h2>Exotische Bäume</h2><p>Informationen über exotische bäume.</p></section>
+  </div>
+
+  <script>
+const style = document.createElement('style');
+style.type = 'text/css';
+style.appendChild(document.createTextNode('a { color: black; }'));
+document.getElementById('dynamic-styles').appendChild(style);
+  </script>
+</body>
+</html>

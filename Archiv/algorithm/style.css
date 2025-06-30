@@ -1,0 +1,198 @@
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #f9f9f9;
+}
+
+header {
+  text-align: center;
+  padding: 20px 20px 30px 20px;
+  background: linear-gradient(90deg, #6a11cb, #2575fc);
+  color: white;
+  position: relative;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin-top: 10px;
+  font-weight: 700;
+}
+
+header nav ul {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+header nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+header nav ul li a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+header nav ul li a.back-link::before {
+  content: '\2190'; 
+  font-size: 1.5rem;
+  color: white; 
+}
+
+main {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2575fc;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #2575fc;
+  padding-bottom: 5px;
+}
+
+section {
+  margin-bottom: 40px;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+  margin: 10px 0;
+}
+
+.intro-block {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+}
+
+.image-block {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image-block, .image-block-single, .image-block-last {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image-item {
+  display: flex;
+  flex-direction: row; 
+  align-items: center; 
+  max-width: 100%; 
+}
+
+
+.image-item h3 {
+  font-size: 1.2rem; 
+  color: #2575fc; 
+  text-align: center; 
+  margin-bottom: 10px; 
+  
+}
+
+.image-block-last .image-container {
+  display: flex;           
+  justify-content: center; 
+  gap: 20px;               
+}
+
+.image-block-last figure {
+  max-width: 45%;         
+  margin: 0;              
+  text-align: center;     
+}
+
+.highlight-blue {
+  color: #2575fc; 
+  font-weight: bold; 
+}
+
+figure {
+  text-align: center;
+  margin: 15px;
+}
+
+img {
+  max-width: 150px;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  border: none;
+}
+
+.text-block {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #f4f4f4;
+  border-radius: 5px;
+  width: 60%; 
+}
+
+figcaption {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+a {
+  color: #2575fc;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  padding: 5px 15px;
+  border-radius: 5px;
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  background-color: transparent;
+  color: #2575fc;
+  border: none;
+}
+
+figure a {
+  display: block;
+}
+
+@media screen and (max-width: 768px) {
+  .image-item {
+    flex-direction: column; 
+    align-items: center;
+    text-align: center;
+  }
+
+  .text-block {
+    width: 80%; 
+    margin-top: 10px;
+  }
+
+  img {
+    max-width: 100%; 
+  }
+}

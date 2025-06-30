@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farbpalette</title>
+  <link rel="stylesheet" href="style.css">
+
+
+
+
+
+
+  
+
+</head>
+<body>
+  <div class="container">
+    <!-- Zielbox -->
+    <div class="goalBox">
+      <p class="goalLabel">Zielfarbe:</p>
+      <div id="goalColor" class="goalColorBox"></div>
+    </div>
+
+    <!-- Mischbox -->
+    <div id="colorBox" class="box"></div>
+
+    <!-- Farbpalette -->
+    <div class="palette">
+      <div class="colorBtn" data-color="red" style="background-color: red;">
+        <span class="clickCount" id="redCount">0</span>
+      </div>
+      <div class="colorBtn" data-color="blue" style="background-color: blue;">
+        <span class="clickCount" id="blueCount">0</span>
+      </div>
+      <div class="colorBtn" data-color="yellow" style="background-color: yellow;">
+        <span class="clickCount" id="yellowCount">0</span>
+      </div>
+      <div class="colorBtn" data-color="white" style="background-color: white; border: 1px solid #ccc;">
+        <span class="clickCount" id="whiteCount">0</span>
+      </div>
+      <div class="colorBtn" data-color="black" style="background-color: black;">
+        <span class="clickCount" id="blackCount">0</span>
+      </div>
+    </div>
+
+    <!-- Gewinnnachricht -->
+    <div id="winMessage" class="winMessage">
+      <div class="winText">Herzlichen Glückwunsch, du hast die Zielfarbe getroffen!</div>
+      <button id="restartButton" class="restartButton">Neustart</button>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="index.js"></script>
+</body>
+</html>

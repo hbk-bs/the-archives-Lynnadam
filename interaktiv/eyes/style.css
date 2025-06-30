@@ -1,0 +1,43 @@
+body {
+  background-color: #DCDCDC;
+}
+
+.image-container {
+  display: flex;                
+  justify-content: space-between; 
+  gap: 10px;           
+  flex-wrap: wrap;             
+}
+
+.image-container figure {
+  position: relative;       
+  margin: 0;               
+  padding: 0;                  
+  width: 23%;      
+}
+
+.image-container img {
+  width: 100%;      
+  height: auto;      
+}
+
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #DCDCDC;
+  opacity: 1;      
+  transition: opacity 0.3s ease;
+}
+
+
+.image-container figure:hover .image-overlay {
+  opacity: 0;    
+}
+
+.image-container figure:hover img {
+  opacity: 1;        
+}

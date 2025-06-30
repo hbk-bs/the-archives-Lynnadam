@@ -1,0 +1,154 @@
+/* Grundlayout */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Container mit Hintergrund */
+.container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-image: url('https://hbk-bs.github.io/the-archives-Lynnadam/assets/images/comic%203.png');
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+/* Container für Figur + Sprechblase */
+.sprech-container {
+  position: fixed;
+  bottom: 0;
+  left: 0; /* Start links */
+  width: 300px;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Figur: startet außerhalb links und gleitet rein */
+.figur {
+  width: 100%;
+  transform: translateX(-120%);
+  opacity: 0;
+  transition: transform 1.2s ease-out, opacity 1.2s ease-out;
+}
+
+/* Sichtbar machen der Figur */
+.figur.visible {
+  transform: translateX(100px); /* auf Zielposition "reinlaufen" */
+  opacity: 1;
+}
+
+/* Sprechblase */
+.sprechblase {
+  position: absolute;
+  bottom: 0px;
+  left: 90%;
+  transform: translateX(-50%) scale(0.8);
+  opacity: 0;
+  background: white;
+  color: #222;
+  padding: 8px 12px;
+  border-radius: 10px 10px 0 0;
+  font-size: 18px;
+  font-family: 'Permanent Marker', cursive, sans-serif;
+  line-height: 1.3;
+  text-shadow:
+    -1px -1px 0 #fff,  
+    1px -1px 0 #fff,
+    -1px 1px 0 #fff,
+    1px 1px 0 #fff;
+  min-width: 200px;
+  max-width: 300px;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  word-wrap: break-word;
+  white-space: normal;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+  z-index: 10;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  /* Optional: leicht drehen für mehr Handgemachtes */
+  /* transform: translateX(-50%) scale(0.8) rotate(-1deg); */
+}
+
+
+/* Sichtbar machen der Sprechblase */
+.sprechblase.visible {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+/* Spitze oben an der Sprechblase (nach oben zeigend) */
+.sprechblase::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 0 10px 10px 10px;
+  border-style: solid;
+  border-color: transparent transparent white transparent;
+  z-index: 11;
+}
+
+/* Startzustand: versteckt */
+.hidden {
+  display: none;
+}
+
+#startBtn {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  z-index: 100;
+  transition: background-color 0.3s ease;
+}
+
+#startBtn:hover {
+  background-color: #0056b3;
+}
+
+.sprechblase .arrow {
+  position: absolute;
+  bottom: 50%; /* vertikal zentriert */
+  right: -40px; /* außerhalb der Sprechblase nach rechts */
+  width: 30px;
+  height: 30px;
+  background: white;
+  clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 20;
+  animation: wobble 2s infinite ease-in-out;
+  filter: drop-shadow(1px 1px 1px black); /* leichter Schatten für besseren Kontrast */
+  transform: translateY(50%);
+}
+
+@keyframes wobble {
+  0%, 100% { transform: translateY(50%) translateX(0) rotate(0deg); }
+  25% { transform: translateY(50%) translateX(3px) rotate(10deg); }
+  50% { transform: translateY(50%) translateX(0) rotate(0deg); }
+  75% { transform: translateY(50%) translateX(-3px) rotate(-10deg); }
+}
+
+
+
+.sprechblase .arrow.visible {
+  opacity: 1;
+}
